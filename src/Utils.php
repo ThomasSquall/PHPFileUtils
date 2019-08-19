@@ -4,11 +4,15 @@
  * Requires all the files in a folder that matches the provided pattern.
  * @param string $dir
  * @param string $pattern
+ * @param bool $recursive
  * @param callback $callback
  */
-function require_all_files($dir, $pattern = "*.php", $callback = null) {
-    foreach (glob($dir . "/" . $pattern) as $file) {
-        require $file;
+function require_all_files($dir, $pattern = "*.php", $recursive = false, $callback = null) {
+    foreach (glob("$dir/$pattern") as $file) {
+        if (!is_dir($file))
+            require $file;
+        elseif ($recursive)
+            require_all_files($file, $pattern, $recursive, $callback);
 
         if (!empty($callback))
             call_user_func($callback, $file);
@@ -19,11 +23,15 @@ function require_all_files($dir, $pattern = "*.php", $callback = null) {
  * Requires once all the files in a folder that matches the provided pattern.
  * @param string $dir
  * @param string $pattern
+ * @param bool $recursive
  * @param callback $callback
  */
-function require_once_all_files($dir, $pattern = "*.php", $callback = null) {
-    foreach (glob($dir . "/" . $pattern) as $file) {
-        require_once $file;
+function require_once_all_files($dir, $pattern = "*.php", $recursive = false, $callback = null) {
+    foreach (glob("$dir/$pattern") as $file) {
+        if (!is_dir($file))
+            require_once $file;
+        elseif ($recursive)
+            require_once_all_files($file, $pattern, $recursive, $callback);
 
         if (!empty($callback))
             call_user_func($callback, $file);
@@ -34,11 +42,15 @@ function require_once_all_files($dir, $pattern = "*.php", $callback = null) {
  * Includes all the files in a folder that matches the provided pattern.
  * @param string $dir
  * @param string $pattern
+ * @param bool $recursive
  * @param callback $callback
  */
-function include_all_files($dir, $pattern = "*.php", $callback = null) {
-    foreach (glob($dir . "/" . $pattern) as $file) {
-        include $file;
+function include_all_files($dir, $pattern = "*.php", $recursive = false, $callback = null) {
+    foreach (glob("$dir/$pattern") as $file) {
+        if (!is_dir($file))
+            include $file;
+        elseif ($recursive)
+            include_all_files($file, $pattern, $recursive, $callback);
 
         if (!empty($callback))
             call_user_func($callback, $file);
@@ -49,13 +61,44 @@ function include_all_files($dir, $pattern = "*.php", $callback = null) {
  * Includes once all the files in a folder that matches the provided pattern.
  * @param string $dir
  * @param string $pattern
+ * @param bool $recursive
  * @param callback $callback
  */
-function include_once_all_files($dir, $pattern = "*.php", $callback = null) {
-    foreach (glob($dir . "/" . $pattern) as $file) {
-        include_once $file;
+function include_once_all_files($dir, $pattern = "*.php", $recursive = false, $callback = null) {
+    foreach (glob("$dir/$pattern") as $file) {
+        if (!is_dir($file))
+            include_once $file;
+        elseif ($recursive)
+            include_once_all_files($file, $pattern, $recursive, $callback);
 
         if (!empty($callback))
             call_user_func($callback, $file);
     }
+}
+
+/**
+ * Get all the files in a folder that matches the provided pattern.
+ * @param string $dir
+ * @param string $pattern
+ * @param bool $recursive
+ * @return array
+ */
+function get_all_files($dir, $pattern = "*", $recursive = false) {
+    $result = [];
+
+    foreach (glob("$dir/$pattern") as $file) {
+        if (!is_dir($file))
+            $result[] = $file;
+        elseif ($recursive)
+            $result = array_merge(
+                $result,
+                get_all_files(
+                    $file,
+                    $pattern,
+                    $recursive
+                )
+            );
+    }
+
+    return $result;
 }
