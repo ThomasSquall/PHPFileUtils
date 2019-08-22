@@ -7,6 +7,7 @@
 3) [include_all_files](#include_all_files)
 4) [include_once_all_files](#include_once_all_files)
 5) [get_all_files](#get_all_files)
+6) [get_all_dirs](#get_all_dirs)
 
 ### require_all_files
 
@@ -125,7 +126,27 @@ get_all_files($dir, $pattern = "*", $recursive = false)
 Where:
 1) $dir is the directory where the files are located
 2) $pattern is the pattern used to find the files (*.php by default)
-3) $recursive will fetch also the child folders if set to true (default is false)
+3) $recursive will fetch also the children folders if set to true (default is false)
+
+#### Usage
+
+``` php
+print_r(get_all_files("my/dir"));
+```
+
+### get_all_dirs
+
+#### Description
+
+Returns all the directories in a given directory.
+
+#### Definition
+
+get_all_dirs($dir, $recursive = false)
+
+Where:
+1) $dir is the directory where the files are located
+2) $recursive will fetch also the children directories if set to true (default is false)
 
 #### Usage
 

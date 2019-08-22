@@ -102,3 +102,28 @@ function get_all_files($dir, $pattern = "*", $recursive = false) {
 
     return $result;
 }
+
+/**
+ * Returns all the directories in a given directory.
+ * @param string $dir
+ * @param bool $recursive
+ * @return array
+ */
+function get_all_dirs($dir, $recursive = false) {
+    $result = [];
+
+    if (!string_ends_with($dir, "/"))
+        $dir .= "/";
+
+    $dir .= "*";
+
+    if ($recursive)
+        foreach (glob($dir, GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+            $result []= $dir;
+            $result = array_merge($result, get_all_dirs($dir, $recursive));
+        }
+    else
+        $result = glob($dir, GLOB_ONLYDIR|GLOB_NOSORT);
+
+    return $result;
+}
