@@ -1,7 +1,7 @@
 {
   "name": "thomas-squall/file-utils",
   "description": "Utilities for file management",
-  "version": "0.2.0",
+  "version": "0.2.5",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -12,7 +12,8 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "thomas-squall/string-utils": "^0.5.5"
+    "thomas-squall/string-utils": "^0.5.5",
+    "ext-json": "*"
   },
   "autoload": {
     "files": ["src/Utils.php"]

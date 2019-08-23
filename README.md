@@ -8,6 +8,8 @@
 4) [include_once_all_files](#include_once_all_files)
 5) [get_all_files](#get_all_files)
 6) [get_all_dirs](#get_all_dirs)
+7) [file_get_json](#file_get_json)
+7) [file_put_json](#file_put_json)
 
 ### require_all_files
 
@@ -152,6 +154,54 @@ Where:
 
 ``` php
 print_r(get_all_files("my/dir"));
+```
+
+### file_get_json
+
+#### Description
+
+Reads the content of a json file and returns it as array or object.
+Please Note: if the content is not a json encoded string an empty array will be returned.
+ 
+#### Definition
+
+file_get_json($file, $associative = true)
+
+Where:
+1) $file is the path to the file that we want to read
+2) $associative will return the content as associative array when true, as object when false
+
+#### Usage
+
+``` php
+$my_array = file_get_json("my/dir/my_file.json");
+```
+
+### file_put_json
+
+#### Description
+
+Saves an array or an object into a json file.
+ 
+#### Definition
+
+file_put_json($file, $content, $pretty = true)
+
+Where:
+1) $file is the path to the file that we want to save the content to
+2) $content is the content we want to save (array or object)
+3) $pretty will save the content prettified when true, minified when false
+
+#### Usage
+
+``` php
+$my_array = [
+    'fruit_1' => 'apple',
+    'fruit_2' => 'pear',
+    'fruit_3' => 'orange' 
+];
+
+file_put_json("my/dir/my_file.json", $my_array);
 ```
 
 ## More utilities coming...

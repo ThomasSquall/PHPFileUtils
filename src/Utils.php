@@ -127,3 +127,33 @@ function get_all_dirs($dir, $recursive = false) {
 
     return $result;
 }
+
+/**
+ * Reads the content of a json file and returns it as array or object.
+ * Please Note: if the content is not a json encoded string an empty array will be returned.
+ * @param string $file
+ * @param bool $associative
+ * @return array|StdClass
+ */
+function file_get_json($file, $associative = true) {
+    $file = file_get_contents($file, $associative);
+    return json_decode($file);
+}
+
+/**
+ * Saves an array or an object into a json file.
+ * @param string $file
+ * @param array|object $content
+ * @param bool $pretty
+ */
+function file_put_json($file, $content, $pretty = true) {
+    if (is_object($content))
+        $content = (array)$content;
+
+    if ($pretty)
+        $content = json_encode($content, JSON_PRETTY_PRINT);
+    else
+        $content = json_encode($content);
+
+    file_put_contents($file, $content);
+}
