@@ -136,8 +136,8 @@ function get_all_dirs($dir, $recursive = false) {
  * @return array|StdClass
  */
 function file_get_json($file, $associative = true) {
-    $file = file_get_contents($file, $associative);
-    return json_decode($file);
+    $file = file_get_contents($file);
+    return json_decode($file, $associative);
 }
 
 /**
