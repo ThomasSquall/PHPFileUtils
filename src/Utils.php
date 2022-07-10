@@ -79,10 +79,11 @@ function include_once_all_files($dir, $pattern = "*.php", $recursive = false, $c
 /**
  * Get all the files in a folder that matches the provided pattern.
  * @param string $dir
+ * @param string $pattern
  * @param bool $recursive
  * @return array
  */
-function get_all_files($dir, $recursive = false) {
+function get_all_files($dir, $pattern = "*", $recursive = false) {
     $result = [];
 
     if (!string_ends_with($dir, DIRECTORY_SEPARATOR))
@@ -90,12 +91,12 @@ function get_all_files($dir, $recursive = false) {
 
     if ($handle = opendir($dir))
         while (false !== ($file = readdir($handle)))
-            if (!is_dir($dir . $file))
+            if (!is_dir($dir . $file) && (string_ends_with($file, str_replace("*", "", $pattern)) || $pattern === "*"))
                 $result[] = $dir . $file;
             elseif ($recursive)
                 $result = array_merge(
                     $result,
-                    get_all_files($dir . $file, $recursive)
+                    get_all_files($dir . $file, $pattern, $recursive)
                 );
 
     closedir($handle);
