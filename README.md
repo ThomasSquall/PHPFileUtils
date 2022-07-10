@@ -123,12 +123,11 @@ Get all the files in a folder that matches the provided pattern.
 
 #### Definition
 
-get_all_files($dir, $pattern = "*", $recursive = false)
+get_all_files($dir, $recursive = false)
 
 Where:
 1) $dir is the directory where the files are located
-2) $pattern is the pattern used to find the files (*.php by default)
-3) $recursive will fetch also the children folders if set to true (default is false)
+2) $recursive will fetch also the children folders if set to true (default is false)
 
 #### Usage
 
